@@ -5,12 +5,32 @@ body {
   font-family: 'Roboto Mono', monospace;
   font-size: 1.2em;
   color: #ffffff;
+  box-sizing: border-box;
+}
+
+.heading {
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;
+}
+
+h1 {
+  font-size: 2em;
+  color: #FFD700;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1em;
+  color: #666666;
+  margin: 5px 0 0 0;
+  font-weight: normal;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,8 +44,6 @@ body {
   height: auto;
   min-height: 12em;
   max-height: 20em;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 #typeInput {
@@ -34,31 +52,18 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 15px;
-  margin: 0;
   color: transparent;
   background: transparent;
+  /*input box border removal*/
   border: none;
   outline: none;
-  caret-color: transparent; /* Hide the caret */
   resize: none;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 1.2em;
-  line-height: 1.5em;
-  letter-spacing: 0;
-  word-spacing: 0;
   z-index: 2;
+  /*no scrollbar*/
   white-space: pre-wrap;
   overflow-y: auto;
   overflow-x: hidden;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
   scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-#typeInput::-webkit-scrollbar {
-  display: none;
 }
 
 #overlay {
@@ -68,18 +73,10 @@ body {
   width: calc(100% - 30px);
   height: 100%;
   padding: 15px;
-  margin: 0;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 1.2em;
-  line-height: 1.5em;
-  letter-spacing: 0;
-  word-spacing: 0;
   z-index: 1;
-  box-sizing: border-box;
-  overflow-y: hidden;
+  overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 #overlay span {
@@ -94,12 +91,8 @@ body {
   color: #ff5555;
 }
 
-#overlay .separator {
-  color: #bb86fc;
-}
-
 #overlay .current {
-  background-color: rgba(255, 255, 255, 0.2); /* Highlight the current character */
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .bottom-section {
