@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T Typer</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="type-container">
+      <div id="overlay"></div>
+      <textarea id="typeInput" autofocus autocomplete="off" spellcheck="false"></textarea>
+    </div>
+
+    <div class="bottom-section">
+      <div class="stats">
+        <span id="timer">60 s</span>
+        <span id="wpm">WPM: 0</span>
+        <span id="accuracy">Accuracy: 100%</span>
+      </div>
+      <div class="modes">
+        <span class="mode-option" data-mode="arrows">← →</span>
+        <span class="mode-option" data-mode="90">90</span>
+        <span class="mode-option active" data-mode="60">60</span>
+        <span class="mode-option" data-mode="30">30</span>
+        <span class="mode-option" data-mode="15">15</span>
+      </div>
+    </div>
+    <button id="reset">Reset</button>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>
