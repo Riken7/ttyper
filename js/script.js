@@ -34,7 +34,7 @@ function countWords(text) {
 }
 
 function generateTestText() {
-  return [getRandomText(), getRandomText(), getRandomText()].join(' | ');
+  return [getRandomText(), getRandomText(), getRandomText(), getRandomText()].join(' ');
 }
 
 function initialize() {
