@@ -1,3 +1,37 @@
+let token = localStorage.getItem('token');
+
+//auth
+async function login(username, password) {
+  const res = await fetch('http://localhost:3000/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  const data = await res.json();
+  if (res.ok) {
+    localStorage.setItem('token', data.token);
+    token = data.token;
+    alert('Login successful!');
+  } else {
+    alert(data.message);
+  }
+}
+
+async function signup(username, password) {
+  const res = await fetch('http://localhost:3000/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password })
+  });
+  const data = await res.json();
+  if (res.ok) {
+    alert('Signup successful. Now login.');
+  } else {
+    alert(data.message);
+  }
+}
+
+
 const overlay = document.getElementById('overlay');
 const typeInput = document.getElementById('typeInput');
 const wpmDisplay = document.getElementById('wpm');
@@ -67,6 +101,24 @@ function updateTimer() {
     clearInterval(timerInterval);
     typeInput.disabled = true;
     isTyping = false;
+    if (token) {
+    const input = typeInput.value;
+    const words = input.trim().split(/\s+/).filter(w => w.length > 0).length;
+    const elapsed = (new Date() - startTime) / 60000;
+    const wpm = elapsed > 0 ? Math.round(words / elapsed) : 0;
+    
+    let correct = 0;
+    for (let i = 0; i < input.length; i++) {
+      if (input[i] === sampleText[i]) correct++;
+    }
+    const accuracy = input.length > 0 ? Math.round((correct / input.length) * 100) : 100;
+
+    fetch('http://localhost:3000/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token, wpm, accuracy, timer: timerDuration })
+    });
+  }
   }
 }
 

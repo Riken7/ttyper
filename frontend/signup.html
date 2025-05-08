@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up - T Typer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1>Sign Up</h1>
+      <h2>Create your T Typer account</h2>
+    </div>
+    <div class="auth">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="signup()">Sign Up</button>
+      <p style="margin-top:1em;">Already have an account? <a href="login.html" style="color: #FFD700;">Sign in</a></p>
+    </div>
+  </div>
+
+  <script>
+    async function signup() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const res = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password})
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Signup successful! Please sign in.');
+        window.location.href = 'login.html';
+      } else {
+        alert(data.message);
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign In - T Typer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1>Sign In</h1>
+      <h2>Welcome back to T Typer</h2>
+    </div>
+    <div class="auth">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button onclick="signin()">Sign In</button>
+      <p style="margin-top:1em;">Don't have an account? <a href="signup.html" style="color: #FFD700;">Sign up</a></p>
+    </div>
+  </div>
+
+  <script>
+    async function signin() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const res = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password})
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        localStorage.setItem('token', data.token);
+        window.location.href = 'index.html';
+      } else {
+        alert(data.message);
+      }
+    }
+  </script>
+</body>
+
+</html>

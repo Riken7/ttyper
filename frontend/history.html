@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Typing History - T Typer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1>Typing History</h1>
+    </div>
+
+    <div id="content" class="auth" style="width: 100%; max-width: 800px;"></div>
+
+    <div style="margin-top: 2em;">
+      <button onclick="goBack()" id="reset">← Back to Typing Test</button>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = 'index.html';
+    }
+
+    async function loadHistory() {
+      const token = localStorage.getItem('token');
+      const contentDiv = document.getElementById('content');
+
+      if (!token) {
+        contentDiv.innerHTML = `
+          <p>You are not logged in.</p>
+          <p><a href="login.html" style="color: #FFD700;">Sign in</a> or <a href="signup.html" style="color: #FFD700;">sign up</a> to view history.</p>`;
+        return;
+      }
+
+      const res = await fetch('http://localhost:3000/history', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token})
+      });
+
+      if (!res.ok) {
+        contentDiv.innerHTML = `<p>Error fetching history.</p>`;
+        return;
+      }
+
+      const history = await res.json();
+      if (history.length === 0) {
+        contentDiv.innerHTML = `<p>No typing history found.</p>`;
+        return;
+      }
+
+      const table = document.createElement('table');
+      table.style.width = '100%';
+      table.style.borderCollapse = 'collapse';
+
+      const header = `
+        <tr style="color: #FFD700;">
+          <th style="text-align: left; padding: 8px;">WPM</th>
+          <th style="text-align: left; padding: 8px;">Accuracy</th>
+          <th style="text-align: left; padding: 8px;">Timer</th>
+          <th style="text-align: left; padding: 8px;">Date</th>
+        </tr>`;
+      table.innerHTML = header;
+
+      history.forEach(item => {
+        const row = `
+          <tr>
+            <td style="padding: 8px;">${item.wpm}</td>
+            <td style="padding: 8px;">${item.accuracy}%</td>
+            <td style="padding: 8px;">${item.timer}s</td>
+            <td style="padding: 8px;">${new Date(item.created_at).toLocaleString()}</td>
+          </tr>`;
+        table.innerHTML += row;
+      });
+
+      contentDiv.innerHTML = '';
+      contentDiv.appendChild(table);
+    }
+
+    loadHistory();
+  </script>
+</body>
+
+</html>
