@@ -7,7 +7,7 @@ const db = require('./db');
 
 const app = express();
 const PORT = 3000;
-const SECRET = 'secret_key';
+const SECRET = 'secret_key'; //hardcoded.. XD?
 
 app.use(cors());
 app.use(bodyParser.json());
